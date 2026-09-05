@@ -1,0 +1,1 @@
+{"version":3,"file":"utils.js","sourceRoot":"","sources":["../../src/domain/utils.ts"],"names":[],"mappings":";;AAEA,MAAqB,KAAK;IACf,MAAM,CAAC,eAAe,CAAC,EAAU,EAAE,EAAU;QAChD,OAAO;YACH,EAAE,EAAE,EAAE;YACN,GAAG,CAAC,EAAE,IAAI,EAAE,EAAE,EAAE,GAAG,EAAE,IAAI,EAAE,EAAE,EAAE,CAAC;SACnC,CAAA;IACL,CAAC;CACJ;AAPD,wBAOC"}
