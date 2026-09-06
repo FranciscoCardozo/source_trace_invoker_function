@@ -15,11 +15,15 @@ app.use((req: Request, res: Response, next: NextFunction) => {
 	next();
   });
 
-app.use((_, res: Response, next: NextFunction) => {
+app.use((req: Request, res: Response, next: NextFunction) => {
 	res.header('Access-Control-Allow-Origin', '*'); // NOSONAR
 	res.header('Access-Control-Allow-Headers', '*'); // NOSONAR
 	res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, DELETE'); // NOSONAR
 	res.header('Allow', 'GET, POST, OPTIONS, PUT, DELETE');
+	if (req.method === 'OPTIONS') {
+		res.sendStatus(204);
+		return;
+	}
 	next();
 });
 app.use(routes);
