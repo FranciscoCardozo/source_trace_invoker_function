@@ -17,11 +17,15 @@ app.use((req, res, next) => {
     console.log(`Petición recibida: ${req.method} ${req.originalUrl}`);
     next();
 });
-app.use((_, res, next) => {
+app.use((req, res, next) => {
     res.header('Access-Control-Allow-Origin', '*'); // NOSONAR
     res.header('Access-Control-Allow-Headers', '*'); // NOSONAR
     res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, DELETE'); // NOSONAR
     res.header('Allow', 'GET, POST, OPTIONS, PUT, DELETE');
+    if (req.method === 'OPTIONS') {
+        res.sendStatus(204);
+        return;
+    }
     next();
 });
 app.use(routes_1.default);
