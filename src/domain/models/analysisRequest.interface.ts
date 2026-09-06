@@ -5,6 +5,17 @@ export enum SourceType {
     UPLOAD = 'UPLOAD',
 }
 
+/** Valor que el contenedor `analysis-mngr` espera en `payload.type` / `payload.jobType`. */
+export enum PayloadSourceType {
+    GIT = 'git',
+    S3 = 's3',
+}
+
+export const SOURCE_TYPE_WIRE: Record<SourceType, PayloadSourceType> = {
+    [SourceType.GIT]: PayloadSourceType.GIT,
+    [SourceType.UPLOAD]: PayloadSourceType.S3,
+};
+
 export enum ArtifactFormat {
     ZIP = 'zip',
     TAR_GZ = 'tar.gz',
@@ -36,7 +47,10 @@ export interface AnalysisRequestBody {
 export interface AnalysisPayload {
     schemaVersion: string;
     requestedAt: string;
-    sourceType: SourceType;
+    /** `git` | `s3`. Lo valida el contenedor `analysis-mngr`. */
+    type: PayloadSourceType;
+    /** Alias de `type` que consume `AnalysisFactory.init`. */
+    jobType: PayloadSourceType;
     repoUrl?: string;
     branch?: string;
     commit?: string;

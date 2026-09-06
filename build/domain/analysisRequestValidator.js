@@ -58,10 +58,12 @@ class AnalysisRequestValidator {
         if (errors.length > 0) {
             return { valid: false, errors };
         }
+        const wireType = analysisRequest_interface_1.SOURCE_TYPE_WIRE[sourceType];
         const payload = {
             schemaVersion: config_1.default.ANALYSIS_SCHEMA_VERSION,
             requestedAt: new Date().toISOString(),
-            sourceType: sourceType,
+            type: wireType,
+            jobType: wireType,
         };
         if (sourceType === analysisRequest_interface_1.SourceType.GIT) {
             payload.repoUrl = body.repoUrl.trim();
