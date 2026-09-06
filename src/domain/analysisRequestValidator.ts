@@ -78,6 +78,7 @@ export default class AnalysisRequestValidator {
             requestedAt: new Date().toISOString(),
             type: wireType,
             jobType: wireType,
+            sourceType: wireType,
         };
 
         if (sourceType === SourceType.GIT) {

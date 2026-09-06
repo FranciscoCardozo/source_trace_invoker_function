@@ -64,6 +64,7 @@ class AnalysisRequestValidator {
             requestedAt: new Date().toISOString(),
             type: wireType,
             jobType: wireType,
+            sourceType: wireType,
         };
         if (sourceType === analysisRequest_interface_1.SourceType.GIT) {
             payload.repoUrl = body.repoUrl.trim();
