@@ -47,10 +47,13 @@ export interface AnalysisRequestBody {
 export interface AnalysisPayload {
     schemaVersion: string;
     requestedAt: string;
-    /** `git` | `s3`. Lo valida el contenedor `analysis-mngr`. */
+    /**
+     * `git` | `s3`. Todos son el mismo valor: la state machine lee `$.payload.sourceType`
+     * y el contenedor `analysis-mngr` valida `type` / `jobType`.
+     */
     type: PayloadSourceType;
-    /** Alias de `type` que consume `AnalysisFactory.init`. */
     jobType: PayloadSourceType;
+    sourceType: PayloadSourceType;
     repoUrl?: string;
     branch?: string;
     commit?: string;
