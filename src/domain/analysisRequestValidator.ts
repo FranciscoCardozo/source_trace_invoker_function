@@ -72,19 +72,21 @@ export default class AnalysisRequestValidator {
 
         const message: AnalysisMessage = {
             jobId: randomUUID(),
-            schemaVersion: config.ANALYSIS_SCHEMA_VERSION,
-            requestedAt: new Date().toISOString(),
-            source: {
-                type: sourceType as SourceType,
-                repoUrl: sourceType === SourceType.GIT ? body.repoUrl!.trim() : null,
-                branch: sourceType === SourceType.GIT && isNonEmptyString(body.branch) ? body.branch.trim() : null,
-                commit: sourceType === SourceType.GIT && isNonEmptyString(body.commit) ? body.commit.trim() : null,
-                authTokenRef: isNonEmptyString(body.authTokenRef) ? body.authTokenRef.trim() : null,
-                artifactPath: sourceType === SourceType.UPLOAD ? body.artifactPath!.trim() : null,
-                artifactFormat: sourceType === SourceType.UPLOAD ? artifactFormat : null,
+            payload: {
+                schemaVersion: config.ANALYSIS_SCHEMA_VERSION,
+                requestedAt: new Date().toISOString(),
+                source: {
+                    type: sourceType as SourceType,
+                    repoUrl: sourceType === SourceType.GIT ? body.repoUrl!.trim() : null,
+                    branch: sourceType === SourceType.GIT && isNonEmptyString(body.branch) ? body.branch.trim() : null,
+                    commit: sourceType === SourceType.GIT && isNonEmptyString(body.commit) ? body.commit.trim() : null,
+                    authTokenRef: isNonEmptyString(body.authTokenRef) ? body.authTokenRef.trim() : null,
+                    artifactPath: sourceType === SourceType.UPLOAD ? body.artifactPath!.trim() : null,
+                    artifactFormat: sourceType === SourceType.UPLOAD ? artifactFormat : null,
+                },
+                projectId: isNonEmptyString(body.projectId) ? body.projectId.trim() : null,
+                callbackUrl: isNonEmptyString(body.callbackUrl) ? body.callbackUrl.trim() : null,
             },
-            projectId: isNonEmptyString(body.projectId) ? body.projectId.trim() : null,
-            callbackUrl: isNonEmptyString(body.callbackUrl) ? body.callbackUrl.trim() : null,
         };
 
         return { valid: true, errors: [], message };

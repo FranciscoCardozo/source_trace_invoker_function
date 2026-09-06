@@ -39,15 +39,22 @@ export interface AnalysisSource {
     artifactFormat: ArtifactFormat | null;
 }
 
-/** Payload usado como input de la Step Function. */
-export interface AnalysisMessage {
-    /** Id del trabajo; la Step Function lo espera como `$.jobId` (PK `JOB#<jobId>`). */
-    jobId: string;
+/** Detalle del trabajo; la Step Function lo lee como `$.payload`. */
+export interface AnalysisPayload {
     schemaVersion: string;
     requestedAt: string;
     source: AnalysisSource;
     projectId: string | null;
     callbackUrl: string | null;
+}
+
+/**
+ * Input de la Step Function.
+ * Espera `$.jobId` (PK `JOB#<jobId>`) y `$.payload` (objeto con el detalle).
+ */
+export interface AnalysisMessage {
+    jobId: string;
+    payload: AnalysisPayload;
 }
 
 export interface AnalysisValidationResult {

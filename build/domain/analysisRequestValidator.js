@@ -60,19 +60,21 @@ class AnalysisRequestValidator {
         }
         const message = {
             jobId: (0, crypto_1.randomUUID)(),
-            schemaVersion: config_1.default.ANALYSIS_SCHEMA_VERSION,
-            requestedAt: new Date().toISOString(),
-            source: {
-                type: sourceType,
-                repoUrl: sourceType === analysisRequest_interface_1.SourceType.GIT ? body.repoUrl.trim() : null,
-                branch: sourceType === analysisRequest_interface_1.SourceType.GIT && isNonEmptyString(body.branch) ? body.branch.trim() : null,
-                commit: sourceType === analysisRequest_interface_1.SourceType.GIT && isNonEmptyString(body.commit) ? body.commit.trim() : null,
-                authTokenRef: isNonEmptyString(body.authTokenRef) ? body.authTokenRef.trim() : null,
-                artifactPath: sourceType === analysisRequest_interface_1.SourceType.UPLOAD ? body.artifactPath.trim() : null,
-                artifactFormat: sourceType === analysisRequest_interface_1.SourceType.UPLOAD ? artifactFormat : null,
+            payload: {
+                schemaVersion: config_1.default.ANALYSIS_SCHEMA_VERSION,
+                requestedAt: new Date().toISOString(),
+                source: {
+                    type: sourceType,
+                    repoUrl: sourceType === analysisRequest_interface_1.SourceType.GIT ? body.repoUrl.trim() : null,
+                    branch: sourceType === analysisRequest_interface_1.SourceType.GIT && isNonEmptyString(body.branch) ? body.branch.trim() : null,
+                    commit: sourceType === analysisRequest_interface_1.SourceType.GIT && isNonEmptyString(body.commit) ? body.commit.trim() : null,
+                    authTokenRef: isNonEmptyString(body.authTokenRef) ? body.authTokenRef.trim() : null,
+                    artifactPath: sourceType === analysisRequest_interface_1.SourceType.UPLOAD ? body.artifactPath.trim() : null,
+                    artifactFormat: sourceType === analysisRequest_interface_1.SourceType.UPLOAD ? artifactFormat : null,
+                },
+                projectId: isNonEmptyString(body.projectId) ? body.projectId.trim() : null,
+                callbackUrl: isNonEmptyString(body.callbackUrl) ? body.callbackUrl.trim() : null,
             },
-            projectId: isNonEmptyString(body.projectId) ? body.projectId.trim() : null,
-            callbackUrl: isNonEmptyString(body.callbackUrl) ? body.callbackUrl.trim() : null,
         };
         return { valid: true, errors: [], message };
     }
