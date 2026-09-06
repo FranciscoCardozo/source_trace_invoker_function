@@ -58,24 +58,30 @@ class AnalysisRequestValidator {
         if (errors.length > 0) {
             return { valid: false, errors };
         }
-        const message = {
-            jobId: (0, crypto_1.randomUUID)(),
-            payload: {
-                schemaVersion: config_1.default.ANALYSIS_SCHEMA_VERSION,
-                requestedAt: new Date().toISOString(),
-                source: {
-                    type: sourceType,
-                    repoUrl: sourceType === analysisRequest_interface_1.SourceType.GIT ? body.repoUrl.trim() : null,
-                    branch: sourceType === analysisRequest_interface_1.SourceType.GIT && isNonEmptyString(body.branch) ? body.branch.trim() : null,
-                    commit: sourceType === analysisRequest_interface_1.SourceType.GIT && isNonEmptyString(body.commit) ? body.commit.trim() : null,
-                    authTokenRef: isNonEmptyString(body.authTokenRef) ? body.authTokenRef.trim() : null,
-                    artifactPath: sourceType === analysisRequest_interface_1.SourceType.UPLOAD ? body.artifactPath.trim() : null,
-                    artifactFormat: sourceType === analysisRequest_interface_1.SourceType.UPLOAD ? artifactFormat : null,
-                },
-                projectId: isNonEmptyString(body.projectId) ? body.projectId.trim() : null,
-                callbackUrl: isNonEmptyString(body.callbackUrl) ? body.callbackUrl.trim() : null,
-            },
+        const payload = {
+            schemaVersion: config_1.default.ANALYSIS_SCHEMA_VERSION,
+            requestedAt: new Date().toISOString(),
+            sourceType: sourceType,
         };
+        if (sourceType === analysisRequest_interface_1.SourceType.GIT) {
+            payload.repoUrl = body.repoUrl.trim();
+            if (isNonEmptyString(body.branch))
+                payload.branch = body.branch.trim();
+            if (isNonEmptyString(body.commit))
+                payload.commit = body.commit.trim();
+        }
+        if (sourceType === analysisRequest_interface_1.SourceType.UPLOAD) {
+            payload.artifactPath = body.artifactPath.trim();
+            if (artifactFormat)
+                payload.artifactFormat = artifactFormat;
+        }
+        if (isNonEmptyString(body.authTokenRef))
+            payload.authTokenRef = body.authTokenRef.trim();
+        if (isNonEmptyString(body.projectId))
+            payload.projectId = body.projectId.trim();
+        if (isNonEmptyString(body.callbackUrl))
+            payload.callbackUrl = body.callbackUrl.trim();
+        const message = { jobId: (0, crypto_1.randomUUID)(), payload };
         return { valid: true, errors: [], message };
     }
 }

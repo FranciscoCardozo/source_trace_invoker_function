@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import debugLib from 'debug';
 import AnalysisRequestValidator from "../../domain/analysisRequestValidator";
 import AnalysisPort from "../../ports/AnalysisPort/analysisPort";
+import JobPort from "../../ports/jobPort/jobPort";
 
 const debug = debugLib('invoker:InvokeAdapter');
 
@@ -18,13 +19,15 @@ export default class InvokeAdapter {
                 return;
             }
 
+            const { jobId } = validation.message;
+
+            // Pre-crea el item JOB#<jobId> (status QUEUED) antes de arrancar la ejecución.
+            await JobPort.createQueuedJob(jobId);
             const execution = await AnalysisPort.startAnalysis(validation.message);
-            debug('Analysis source started. jobId: %s, executionArn: %s', validation.message.jobId, execution.executionArn);
+            debug('Analysis source started. jobId: %s, executionArn: %s', jobId, execution.executionArn);
 
             res.status(202).json({
-                jobId: validation.message.jobId,
-                executionArn: execution.executionArn,
-                startDate: execution.startDate,
+                analysisId: jobId,
                 status: 'STARTED',
             });
         } catch (error) {

@@ -28,29 +28,29 @@ export interface AnalysisRequestBody {
     callbackUrl?: string;
 }
 
-/** Origen normalizado que viaja dentro del mensaje. */
-export interface AnalysisSource {
-    type: SourceType;
-    repoUrl: string | null;
-    branch: string | null;
-    commit: string | null;
-    authTokenRef: string | null;
-    artifactPath: string | null;
-    artifactFormat: ArtifactFormat | null;
-}
-
-/** Detalle del trabajo; la Step Function lo lee como `$.payload`. */
+/**
+ * `AnalysisRequest` validado y normalizado. Viaja como `$.payload` en el input
+ * de la Step Function; el Step Function no lo inspecta, lo parsea el contenedor
+ * `getSource` (env `PAYLOAD`). Las claves ausentes se omiten (no van en `null`).
+ */
 export interface AnalysisPayload {
     schemaVersion: string;
     requestedAt: string;
-    source: AnalysisSource;
-    projectId: string | null;
-    callbackUrl: string | null;
+    sourceType: SourceType;
+    repoUrl?: string;
+    branch?: string;
+    commit?: string;
+    authTokenRef?: string;
+    artifactPath?: string;
+    artifactFormat?: ArtifactFormat;
+    projectId?: string;
+    callbackUrl?: string;
 }
 
 /**
  * Input de la Step Function.
- * Espera `$.jobId` (PK `JOB#<jobId>`) y `$.payload` (objeto con el detalle).
+ * `$.jobId` → PK `JOB#<jobId>` en DynamoDB y env `JOB_ID` de cada task ECS.
+ * `$.payload` → objeto JSON (obligatorio; `{}` es válido) que se pasa como env `PAYLOAD`.
  */
 export interface AnalysisMessage {
     jobId: string;

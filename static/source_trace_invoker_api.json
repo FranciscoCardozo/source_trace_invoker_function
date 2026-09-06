@@ -314,18 +314,10 @@
       "AnalysisAccepted": {
         "type": "object",
         "properties": {
-          "jobId": {
+          "analysisId": {
             "type": "string",
             "format": "uuid",
-            "description": "Id del trabajo; se envía como `$.jobId` en el input de la Step Function y se usa como nombre de la ejecución."
-          },
-          "executionArn": {
-            "type": "string",
-            "example": "arn:aws:states:us-east-1:000000000000:execution:source-trace-analysis:2b8c..."
-          },
-          "startDate": {
-            "type": "string",
-            "format": "date-time"
+            "description": "Id del trabajo (`jobId`). Sirve para consultar el estado en `JOB#<analysisId>` / `SK=META`."
           },
           "status": {
             "type": "string",
