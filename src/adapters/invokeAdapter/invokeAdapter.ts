@@ -3,7 +3,7 @@ import debugLib from 'debug';
 import AnalysisRequestValidator from "../../domain/analysisRequestValidator";
 import AnalysisPort from "../../ports/AnalysisPort/analysisPort";
 
-const debug = debugLib('invoke:adapter');
+const debug = debugLib('invoker:InvokeAdapter');
 
 export default class InvokeAdapter {
     public static async invokeAnalysisSource(req: Request, res: Response): Promise<void> {
