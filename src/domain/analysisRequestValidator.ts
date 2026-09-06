@@ -71,7 +71,7 @@ export default class AnalysisRequestValidator {
         }
 
         const message: AnalysisMessage = {
-            analysisId: randomUUID(),
+            jobId: randomUUID(),
             schemaVersion: config.ANALYSIS_SCHEMA_VERSION,
             requestedAt: new Date().toISOString(),
             source: {

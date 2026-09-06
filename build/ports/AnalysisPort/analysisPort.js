@@ -17,14 +17,14 @@ class AnalysisPort {
         if (!stateMachineArn) {
             throw new Error('La variable de entorno ANALYSIS_STATE_MACHINE_ARN no está configurada.');
         }
-        debug('Start analysis %s on %s', message.analysisId, stateMachineArn);
+        debug('Start analysis %s on %s', message.jobId, stateMachineArn);
         const result = await AnalysisPort.client.send(new client_sfn_1.StartExecutionCommand({
             stateMachineArn,
             // Nombre único de ejecución; garantiza idempotencia durante ~90 días.
-            name: message.analysisId,
+            name: message.jobId,
             input: JSON.stringify(message),
         }));
-        debug('Started analysis %s. executionArn: %s', message.analysisId, result.executionArn);
+        debug('Started analysis %s. executionArn: %s', message.jobId, result.executionArn);
         return { executionArn: result.executionArn, startDate: result.startDate };
     }
 }

@@ -59,7 +59,7 @@ class AnalysisRequestValidator {
             return { valid: false, errors };
         }
         const message = {
-            analysisId: (0, crypto_1.randomUUID)(),
+            jobId: (0, crypto_1.randomUUID)(),
             schemaVersion: config_1.default.ANALYSIS_SCHEMA_VERSION,
             requestedAt: new Date().toISOString(),
             source: {
