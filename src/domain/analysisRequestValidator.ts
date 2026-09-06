@@ -6,6 +6,7 @@ import {
     AnalysisRequestBody,
     AnalysisValidationResult,
     ArtifactFormat,
+    SOURCE_TYPE_WIRE,
     SourceType,
 } from './models/analysisRequest.interface';
 
@@ -71,10 +72,12 @@ export default class AnalysisRequestValidator {
             return { valid: false, errors };
         }
 
+        const wireType = SOURCE_TYPE_WIRE[sourceType as SourceType];
         const payload: AnalysisPayload = {
             schemaVersion: config.ANALYSIS_SCHEMA_VERSION,
             requestedAt: new Date().toISOString(),
-            sourceType: sourceType as SourceType,
+            type: wireType,
+            jobType: wireType,
         };
 
         if (sourceType === SourceType.GIT) {
