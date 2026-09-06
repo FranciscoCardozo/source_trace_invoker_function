@@ -27,7 +27,7 @@ export default class InvokeAdapter {
             debug('Analysis source started. jobId: %s, executionArn: %s', jobId, execution.executionArn);
 
             res.status(202).json({
-                analysisId: jobId,
+                jobId,
                 status: 'STARTED',
             });
         } catch (error) {
