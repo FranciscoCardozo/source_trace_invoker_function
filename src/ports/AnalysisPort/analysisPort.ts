@@ -19,12 +19,15 @@ export default class AnalysisPort {
             throw new Error('La variable de entorno ANALYSIS_STATE_MACHINE_ARN no está configurada.');
         }
 
+        // El nombre de ejecución admite [0-9A-Za-z_-] y máx. 80 chars.
+        const executionName = message.jobId.replace(/[^0-9A-Za-z_-]/g, '-').slice(0, 80);
+
         debug('Start analysis %s on %s', message.jobId, stateMachineArn);
         const result = await AnalysisPort.client.send(
             new StartExecutionCommand({
                 stateMachineArn,
                 // Nombre único de ejecución; garantiza idempotencia durante ~90 días.
-                name: message.jobId,
+                name: executionName,
                 input: JSON.stringify(message),
             }),
         );

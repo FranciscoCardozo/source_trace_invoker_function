@@ -1,7 +1,8 @@
 export default {
     apiPath: process.env.API_PATH || '/Invoker',
     DEBUG: process.env.DEBUG || 'invoker:*',
-    DYNAMODB_TABLE_NAME: process.env.DYNAMODB_TABLE_NAME || 'source_trace_db',
+    // Tabla de jobs (PK `JOB#<jobId>`, SK `META`).
+    DYNAMODB_TABLE_NAME: process.env.DYNAMODB_TABLE || process.env.DYNAMODB_TABLE_NAME || 'source_trace_db',
     AWS_REGION: process.env.AWS_REGION || 'us-east-1',
     STEP_FUNCTION: {
         // ARN de la Step Function que ejecuta el análisis de código fuente.

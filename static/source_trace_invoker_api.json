@@ -317,15 +317,7 @@
           "jobId": {
             "type": "string",
             "format": "uuid",
-            "description": "Id del trabajo; se envía como `$.jobId` en el input de la Step Function y se usa como nombre de la ejecución."
-          },
-          "executionArn": {
-            "type": "string",
-            "example": "arn:aws:states:us-east-1:000000000000:execution:source-trace-analysis:2b8c..."
-          },
-          "startDate": {
-            "type": "string",
-            "format": "date-time"
+            "description": "Id del trabajo. Sirve para consultar el estado en `JOB#<jobId>` / `SK=META` y es lo que espera la Step Function como `$.jobId`."
           },
           "status": {
             "type": "string",

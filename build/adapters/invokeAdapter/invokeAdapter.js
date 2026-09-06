@@ -6,6 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const debug_1 = __importDefault(require("debug"));
 const analysisRequestValidator_1 = __importDefault(require("../../domain/analysisRequestValidator"));
 const analysisPort_1 = __importDefault(require("../../ports/AnalysisPort/analysisPort"));
+const jobPort_1 = __importDefault(require("../../ports/jobPort/jobPort"));
 const debug = (0, debug_1.default)('invoker:InvokeAdapter');
 class InvokeAdapter {
     static async invokeAnalysisSource(req, res) {
@@ -18,12 +19,13 @@ class InvokeAdapter {
                 res.status(400).json({ message: 'Invalid analysis request', errors: validation.errors });
                 return;
             }
+            const { jobId } = validation.message;
+            // Pre-crea el item JOB#<jobId> (status QUEUED) antes de arrancar la ejecución.
+            await jobPort_1.default.createQueuedJob(jobId);
             const execution = await analysisPort_1.default.startAnalysis(validation.message);
-            debug('Analysis source started. jobId: %s, executionArn: %s', validation.message.jobId, execution.executionArn);
+            debug('Analysis source started. jobId: %s, executionArn: %s', jobId, execution.executionArn);
             res.status(202).json({
-                jobId: validation.message.jobId,
-                executionArn: execution.executionArn,
-                startDate: execution.startDate,
+                jobId,
                 status: 'STARTED',
             });
         }
