@@ -19,10 +19,10 @@ export default class InvokeAdapter {
             }
 
             const execution = await AnalysisPort.startAnalysis(validation.message);
-            debug('Analysis source started. analysisId: %s, executionArn: %s', validation.message.analysisId, execution.executionArn);
+            debug('Analysis source started. jobId: %s, executionArn: %s', validation.message.jobId, execution.executionArn);
 
             res.status(202).json({
-                analysisId: validation.message.analysisId,
+                jobId: validation.message.jobId,
                 executionArn: execution.executionArn,
                 startDate: execution.startDate,
                 status: 'STARTED',

@@ -314,10 +314,10 @@
       "AnalysisAccepted": {
         "type": "object",
         "properties": {
-          "analysisId": {
+          "jobId": {
             "type": "string",
             "format": "uuid",
-            "description": "Id del análisis; se usa como nombre de la ejecución de la Step Function."
+            "description": "Id del trabajo; se envía como `$.jobId` en el input de la Step Function y se usa como nombre de la ejecución."
           },
           "executionArn": {
             "type": "string",

@@ -6,7 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const debug_1 = __importDefault(require("debug"));
 const uploadRequestValidator_1 = __importDefault(require("../../domain/uploadRequestValidator"));
 const uploadPort_1 = __importDefault(require("../../ports/uploadPort/uploadPort"));
-const debug = (0, debug_1.default)('upload:adapter');
+const debug = (0, debug_1.default)('invoker:UploadAdapter');
 class UploadAdapter {
     /**
      * GET: devuelve una URL prefirmada de S3 (SOURCE_TRACE_API) para que el

@@ -41,7 +41,8 @@ export interface AnalysisSource {
 
 /** Payload usado como input de la Step Function. */
 export interface AnalysisMessage {
-    analysisId: string;
+    /** Id del trabajo; la Step Function lo espera como `$.jobId` (PK `JOB#<jobId>`). */
+    jobId: string;
     schemaVersion: string;
     requestedAt: string;
     source: AnalysisSource;

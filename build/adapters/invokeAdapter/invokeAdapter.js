@@ -6,7 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const debug_1 = __importDefault(require("debug"));
 const analysisRequestValidator_1 = __importDefault(require("../../domain/analysisRequestValidator"));
 const analysisPort_1 = __importDefault(require("../../ports/AnalysisPort/analysisPort"));
-const debug = (0, debug_1.default)('invoke:adapter');
+const debug = (0, debug_1.default)('invoker:InvokeAdapter');
 class InvokeAdapter {
     static async invokeAnalysisSource(req, res) {
         try {
@@ -19,9 +19,9 @@ class InvokeAdapter {
                 return;
             }
             const execution = await analysisPort_1.default.startAnalysis(validation.message);
-            debug('Analysis source started. analysisId: %s, executionArn: %s', validation.message.analysisId, execution.executionArn);
+            debug('Analysis source started. jobId: %s, executionArn: %s', validation.message.jobId, execution.executionArn);
             res.status(202).json({
-                analysisId: validation.message.analysisId,
+                jobId: validation.message.jobId,
                 executionArn: execution.executionArn,
                 startDate: execution.startDate,
                 status: 'STARTED',
