@@ -3,7 +3,7 @@ import debugLib from 'debug';
 import UploadRequestValidator from "../../domain/uploadRequestValidator";
 import UploadPort from "../../ports/uploadPort/uploadPort";
 
-const debug = debugLib('upload:adapter');
+const debug = debugLib('invoker:UploadAdapter');
 
 export default class UploadAdapter {
     /**

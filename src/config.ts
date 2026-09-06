@@ -1,6 +1,6 @@
 export default {
     apiPath: process.env.API_PATH || '/Invoker',
-    DEBUG: process.env.DEBUG || 'source_trace:*',
+    DEBUG: process.env.DEBUG || 'invoker:*',
     DYNAMODB_TABLE_NAME: process.env.DYNAMODB_TABLE_NAME || 'source_trace_db',
     AWS_REGION: process.env.AWS_REGION || 'us-east-1',
     STEP_FUNCTION: {
